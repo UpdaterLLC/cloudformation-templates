@@ -4,7 +4,22 @@
     "MyVPCName": {
       "Type": "String",
       "Default": "PublicVPC",
-      "Description": "My VPC Name"
+      "Description": "The name of your small public VPC"
+    },
+    "MyVPCCIDR": {
+      "Type": "String",
+      "Default": "10.10.0.0/16",
+      "Description": "The CIDR (range of IP addresses) of your small public VPC"
+    },
+    "MySandboxSubnetCIDR": {
+      "Type": "String",
+      "Default": "10.10.10.0/24",
+      "Description": "The CIDR (range of IP addresses) of your private (sandbox) subnet"
+    },
+    "MyPublicSubnetCIDR": {
+      "Type": "String",
+      "Default": "10.10.20.0/24",
+      "Description": "The CIDR (range of IP addresses) of your public subnet"
     },
     "OperatorEMail": {
       "Description": "EMail address to notify if there are any scaling operations",
@@ -111,7 +126,9 @@
     "SandboxSBN": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.10.10.0/24",
+        "CidrBlock": {
+          "Ref": "MySandboxSubnetCIDR"
+        },
         "AvailabilityZone": "us-east-1b",
         "VpcId": {
           "Ref": "MyVPC"
@@ -202,7 +219,9 @@
     "PublicSBN": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.10.20.0/24",
+        "CidrBlock": {
+          "Ref": "MyPublicSubnetCIDR"
+        },
         "AvailabilityZone": "us-east-1a",
         "VpcId": {
           "Ref": "MyVPC"
@@ -591,7 +610,9 @@
     "MyVPC": {
       "Type": "AWS::EC2::VPC",
       "Properties": {
-        "CidrBlock": "10.10.0.0/16",
+        "CidrBlock": {
+          "Ref": "MyVPCCIDR"
+        },
         "InstanceTenancy": "default",
         "EnableDnsSupport": "true",
         "EnableDnsHostnames": "true",
