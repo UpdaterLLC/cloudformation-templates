@@ -631,29 +631,11 @@
         }
       }
     },
-    "PublicSGREgress": {
-      "Type": "AWS::EC2::SecurityGroupEgress",
-      "Properties": {
-        "GroupId": {
-          "Ref": "PublicSGR"
-        },
-        "IpProtocol": "-1",
-        "CidrIp": "0.0.0.0/0"
-      }
-    },
-    "PublicSGR": {
+    "AllowHTTPFromAnySGR": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
-        "GroupDescription": "Enable SSH access and HTTP from the load balancer only",
+        "GroupDescription": "Enable HTTP from any",
         "SecurityGroupIngress": [
-          {
-            "IpProtocol": "tcp",
-            "FromPort": "22",
-            "ToPort": "22",
-            "CidrIp": {
-              "Ref": "SSHLocation"
-            }
-          },
           {
             "IpProtocol": "tcp",
             "FromPort": "80",
@@ -669,12 +651,45 @@
         ],
         "VpcId": {
           "Ref": "MyVPC"
-        }
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "AllowHTTPFromAnySGR"
+          }
+        ]
       },
       "Metadata": {
         "AWS::CloudFormation::Designer": {
           "id": "20b0bae7-b6d2-4051-a594-b32a8a64de20"
         }
+      }
+    },
+    "AllowSSHFromSSHLocationSGR": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Enable SSH from special SSH location",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": "22",
+            "ToPort": "22",
+            "CidrIp": {
+              "Ref": "SSHLocation"
+            }
+          }
+        ],
+        "VpcId": {
+          "Ref": "MyVPC"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "AllowSSHFromMyLocation"
+          }
+        ]
+      },
+      "Metadata": {
       }
     }
   },
