@@ -27,6 +27,11 @@
       "AllowedPattern": "([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)",
       "ConstraintDescription": "must be a valid email address."
     },
+    "UnixUser": {
+      "Description": "Unix user name to admin boxes",
+      "Default": "",
+      "Type": "String"
+    },
     "KeyName": {
       "Description": "The EC2 Key Pair to allow SSH access to the instances",
       "Type": "AWS::EC2::KeyPair::KeyName",
@@ -102,6 +107,76 @@
         "cg1.4xlarge"
       ],
       "ConstraintDescription": "must be a valid EC2 instance type."
+    }
+  },
+  "Mappings" : {
+    "AWSInstanceType2Arch" : {
+      "t1.micro"    : { "Arch" : "PV64"   },
+      "t2.nano"     : { "Arch" : "HVM64"  },
+      "t2.micro"    : { "Arch" : "HVM64"  },
+      "t2.small"    : { "Arch" : "HVM64"  },
+      "t2.medium"   : { "Arch" : "HVM64"  },
+      "t2.large"    : { "Arch" : "HVM64"  },
+      "m1.small"    : { "Arch" : "PV64"   },
+      "m1.medium"   : { "Arch" : "PV64"   },
+      "m1.large"    : { "Arch" : "PV64"   },
+      "m1.xlarge"   : { "Arch" : "PV64"   },
+      "m2.xlarge"   : { "Arch" : "PV64"   },
+      "m2.2xlarge"  : { "Arch" : "PV64"   },
+      "m2.4xlarge"  : { "Arch" : "PV64"   },
+      "m3.medium"   : { "Arch" : "HVM64"  },
+      "m3.large"    : { "Arch" : "HVM64"  },
+      "m3.xlarge"   : { "Arch" : "HVM64"  },
+      "m3.2xlarge"  : { "Arch" : "HVM64"  },
+      "m4.large"    : { "Arch" : "HVM64"  },
+      "m4.xlarge"   : { "Arch" : "HVM64"  },
+      "m4.2xlarge"  : { "Arch" : "HVM64"  },
+      "m4.4xlarge"  : { "Arch" : "HVM64"  },
+      "m4.10xlarge" : { "Arch" : "HVM64"  },
+      "c1.medium"   : { "Arch" : "PV64"   },
+      "c1.xlarge"   : { "Arch" : "PV64"   },
+      "c3.large"    : { "Arch" : "HVM64"  },
+      "c3.xlarge"   : { "Arch" : "HVM64"  },
+      "c3.2xlarge"  : { "Arch" : "HVM64"  },
+      "c3.4xlarge"  : { "Arch" : "HVM64"  },
+      "c3.8xlarge"  : { "Arch" : "HVM64"  },
+      "c4.large"    : { "Arch" : "HVM64"  },
+      "c4.xlarge"   : { "Arch" : "HVM64"  },
+      "c4.2xlarge"  : { "Arch" : "HVM64"  },
+      "c4.4xlarge"  : { "Arch" : "HVM64"  },
+      "c4.8xlarge"  : { "Arch" : "HVM64"  },
+      "g2.2xlarge"  : { "Arch" : "HVMG2"  },
+      "g2.8xlarge"  : { "Arch" : "HVMG2"  },
+      "r3.large"    : { "Arch" : "HVM64"  },
+      "r3.xlarge"   : { "Arch" : "HVM64"  },
+      "r3.2xlarge"  : { "Arch" : "HVM64"  },
+      "r3.4xlarge"  : { "Arch" : "HVM64"  },
+      "r3.8xlarge"  : { "Arch" : "HVM64"  },
+      "i2.xlarge"   : { "Arch" : "HVM64"  },
+      "i2.2xlarge"  : { "Arch" : "HVM64"  },
+      "i2.4xlarge"  : { "Arch" : "HVM64"  },
+      "i2.8xlarge"  : { "Arch" : "HVM64"  },
+      "d2.xlarge"   : { "Arch" : "HVM64"  },
+      "d2.2xlarge"  : { "Arch" : "HVM64"  },
+      "d2.4xlarge"  : { "Arch" : "HVM64"  },
+      "d2.8xlarge"  : { "Arch" : "HVM64"  },
+      "hi1.4xlarge" : { "Arch" : "HVM64"  },
+      "hs1.8xlarge" : { "Arch" : "HVM64"  },
+      "cr1.8xlarge" : { "Arch" : "HVM64"  },
+      "cc2.8xlarge" : { "Arch" : "HVM64"  }
+    },
+    "AWSRegionArch2AMI" : {
+      "us-east-1"        : {"PV64" : "ami-22111148", "HVM64" : "ami-08111162", "HVMG2" : "ami-ebcec381"},
+      "us-west-2"        : {"PV64" : "ami-792bc219", "HVM64" : "ami-c229c0a2", "HVMG2" : "ami-0f28c06f"},
+      "us-west-1"        : {"PV64" : "ami-0e087a6e", "HVM64" : "ami-1b0f7d7b", "HVMG2" : "ami-ab9defcb"},
+      "eu-west-1"        : {"PV64" : "ami-a5368cd6", "HVM64" : "ami-31328842", "HVMG2" : "ami-d1d652a2"},
+      "eu-central-1"     : {"PV64" : "ami-2bde3944", "HVM64" : "ami-e2df388d", "HVMG2" : "ami-5240a73d"},
+      "ap-northeast-1"   : {"PV64" : "ami-37020959", "HVM64" : "ami-f80e0596", "HVMG2" : "ami-34a9a35a"},
+      "ap-northeast-2"   : {"PV64" : "NOT_SUPPORTED", "HVM64" : "ami-6598510b", "HVMG2" : "NOT_SUPPORTED"},
+      "ap-southeast-1"   : {"PV64" : "ami-ff0cc79c", "HVM64" : "ami-e90dc68a", "HVMG2" : "ami-6f6ca70c"},
+      "ap-southeast-2"   : {"PV64" : "ami-f5210196", "HVM64" : "ami-f2210191", "HVMG2" : "ami-88c1e1eb"},
+      "sa-east-1"        : {"PV64" : "ami-661e930a", "HVM64" : "ami-1e159872", "HVMG2" : "NOT_SUPPORTED"},
+      "cn-north-1"       : {"PV64" : "ami-08ef2465", "HVM64" : "ami-49e22924", "HVMG2" : "NOT_SUPPORTED"}
     }
   },
   "Resources": {
@@ -711,7 +786,11 @@
     },
     "PublicEIP": {
       "Type": "AWS::EC2::EIP",
-      "Properties": {},
+      "Properties": {
+        "InstanceId": {
+          "Ref": "PublicBox"
+        }
+      },
       "Metadata": {
         "AWS::CloudFormation::Designer": {
           "id": "1b64f921-a36b-49ad-91f6-b99dc02164d3"
@@ -720,6 +799,84 @@
       "DependsOn": [
         "MyVPC"
       ]
+    },
+    "PublicBox": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "SubnetId": {
+          "Ref": "PublicSBN"
+        },
+        "ImageId": {
+          "Fn::FindInMap": [
+            "AWSRegionArch2AMI",
+            {
+              "Ref": "AWS::Region"
+            },
+            {
+              "Fn::FindInMap": [
+                "AWSInstanceType2Arch",
+                {
+                  "Ref": "InstanceType"
+                },
+                "Arch"
+              ]
+            }
+          ]
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "KeyName": {
+          "Ref": "KeyName"
+        },
+        "SecurityGroupIds": [
+          {
+            "Ref": "AllowSSHFromSSHLocationSGR"
+          },
+          {
+            "Ref": "AllowHTTPFromAnySGR"
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#cloud-config\n",
+                "system_info:\n",
+                "  default_user:\n",
+                "    name: ",
+                {
+                  "Ref": "UnixUser"
+                },
+                "\n",
+                "\n"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "48c88e7c-a430-4cdb-a059-17c5831ca67f"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "PublicIP": {
+      "Description": "Elastic IP address for newly created public box",
+      "Value": {
+        "Ref": "PublicEIP"
+      }
     }
   },
   "Description": "Small Public VPC Stack",
@@ -913,8 +1070,8 @@
       },
       "0966066e-7217-4627-88ef-67afc3e3b198": {
         "size": {
-          "width": 370,
-          "height": 120
+          "width": 380,
+          "height": 90
         },
         "position": {
           "x": 510,
@@ -922,7 +1079,9 @@
         },
         "z": 2,
         "parent": "e2bc8067-815e-49d3-b200-c157e814404d",
-        "embeds": []
+        "embeds": [
+          "48c88e7c-a430-4cdb-a059-17c5831ca67f"
+        ]
       },
       "21f7aa95-d9a1-468c-8c9f-336d9a74cee9": {
         "source": {
@@ -966,8 +1125,8 @@
           "height": 60
         },
         "position": {
-          "x": 840,
-          "y": 450
+          "x": 610,
+          "y": 440
         },
         "z": 2,
         "parent": "e2bc8067-815e-49d3-b200-c157e814404d",
@@ -1108,8 +1267,8 @@
           "height": 60
         },
         "position": {
-          "x": 770,
-          "y": 450
+          "x": 550,
+          "y": 440
         },
         "z": 2,
         "parent": "e2bc8067-815e-49d3-b200-c157e814404d",
@@ -1121,11 +1280,14 @@
           "height": 60
         },
         "position": {
-          "x": 67.87644883934888,
-          "y": 415.57916141317304
+          "x": 960,
+          "y": 330
         },
         "z": 0,
         "embeds": [],
+        "isconnectedto": [
+          "48c88e7c-a430-4cdb-a059-17c5831ca67f"
+        ],
         "dependson": [
           "e2bc8067-815e-49d3-b200-c157e814404d"
         ]
@@ -1138,6 +1300,41 @@
           "id": "e2bc8067-815e-49d3-b200-c157e814404d"
         },
         "z": 4
+      },
+      "48c88e7c-a430-4cdb-a059-17c5831ca67f": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 580,
+          "y": 330
+        },
+        "z": 3,
+        "parent": "0966066e-7217-4627-88ef-67afc3e3b198",
+        "embeds": [],
+        "ismemberof": [
+          "109a9704-5fbb-48d9-8061-c80f70c04227",
+          "20b0bae7-b6d2-4051-a594-b32a8a64de20"
+        ]
+      },
+      "55fe871b-4618-4349-bf8f-545bee9a7697": {
+        "source": {
+          "id": "48c88e7c-a430-4cdb-a059-17c5831ca67f"
+        },
+        "target": {
+          "id": "109a9704-5fbb-48d9-8061-c80f70c04227"
+        },
+        "z": 4
+      },
+      "ceabd896-bf33-4a95-ab1a-b7ff95c09b6a": {
+        "source": {
+          "id": "48c88e7c-a430-4cdb-a059-17c5831ca67f"
+        },
+        "target": {
+          "id": "20b0bae7-b6d2-4051-a594-b32a8a64de20"
+        },
+        "z": 5
       }
     }
   }
