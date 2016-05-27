@@ -129,7 +129,14 @@
         "CidrBlock": {
           "Ref": "MySandboxSubnetCIDR"
         },
-        "AvailabilityZone": "us-east-1b",
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
         "VpcId": {
           "Ref": "MyVPC"
         },
@@ -222,7 +229,14 @@
         "CidrBlock": {
           "Ref": "MyPublicSubnetCIDR"
         },
-        "AvailabilityZone": "us-east-1a",
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
         "VpcId": {
           "Ref": "MyVPC"
         },
@@ -694,6 +708,18 @@
           "id": "109a9704-5fbb-48d9-8061-c80f70c04227"
         }
       }
+    },
+    "PublicEIP": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {},
+      "Metadata": {
+        "AWS::CloudFormation::Designer": {
+          "id": "1b64f921-a36b-49ad-91f6-b99dc02164d3"
+        }
+      },
+      "DependsOn": [
+        "MyVPC"
+      ]
     }
   },
   "Description": "Small Public VPC Stack",
@@ -923,7 +949,7 @@
         "target": {
           "id": "0966066e-7217-4627-88ef-67afc3e3b198"
         },
-        "z": 0
+        "z": 2
       },
       "b78affc1-7dfc-49c7-b75c-9b09b3d710f3": {
         "source": {
@@ -1088,6 +1114,30 @@
         "z": 2,
         "parent": "e2bc8067-815e-49d3-b200-c157e814404d",
         "embeds": []
+      },
+      "1b64f921-a36b-49ad-91f6-b99dc02164d3": {
+        "size": {
+          "width": 60,
+          "height": 60
+        },
+        "position": {
+          "x": 67.87644883934888,
+          "y": 415.57916141317304
+        },
+        "z": 0,
+        "embeds": [],
+        "dependson": [
+          "e2bc8067-815e-49d3-b200-c157e814404d"
+        ]
+      },
+      "21aa3a92-a053-4252-9909-7448a9003076": {
+        "source": {
+          "id": "1b64f921-a36b-49ad-91f6-b99dc02164d3"
+        },
+        "target": {
+          "id": "e2bc8067-815e-49d3-b200-c157e814404d"
+        },
+        "z": 4
       }
     }
   }
