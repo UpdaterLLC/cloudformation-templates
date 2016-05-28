@@ -881,6 +881,7 @@
                 "  - curl\n",
                 "  - ntp\n",
                 "  - git\n",
+                "  - redis-server\n",
                 "\n",
                 "runcmd:\n",
                 "  - echo \"unattended-upgrades       unattended-upgrades/enable_auto_updates boolean true\" | debconf-set-selections; dpkg-reconfigure -f noninteractive unattended-upgrades\n",
