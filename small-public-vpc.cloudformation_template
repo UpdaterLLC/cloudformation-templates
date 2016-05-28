@@ -877,6 +877,7 @@
                 "repo_upgrade: security\n",
                 "packages:\n",
                 "  - unattended-upgrades\n",
+                "  - sysv-rc-conf\n",
                 "  - net-tools\n",
                 "  - curl\n",
                 "  - ntp\n",
