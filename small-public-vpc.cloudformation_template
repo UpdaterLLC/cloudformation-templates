@@ -98,11 +98,6 @@
       ],
       "ConstraintDescription": "must be a valid EC2 instance type."
     },
-    "PublicBoxHostName": {
-      "Type": "String",
-      "Default": "public",
-      "Description": "The name of your small public box"
-    },
     "PublicBoxTimeZone": {
       "Type": "String",
       "Default": "Asia/Tokyo",
@@ -862,12 +857,6 @@
               [
                 "#cloud-config\n",
                 "disable_ec2_metadata: true\n",
-                "preserve_hostname: True\n",
-                "hostname: ",
-                {
-                  "Ref": "PublicBoxHostName"
-                },
-                "\n",
                 "manage_etc_hosts: true\n",
                 "timezone: ",
                 {
