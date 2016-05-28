@@ -868,6 +868,7 @@
                   "Ref": "PublicBoxHostName"
                 },
                 "\n",
+                "manage_etc_hosts: true\n",
                 "timezone: ",
                 {
                   "Ref": "PublicBoxTimeZone"
@@ -889,12 +890,17 @@
                 "  - unattended-upgrades\n",
                 "  - net-tools\n",
                 "  - curl\n",
+                "  - ntp\n",
                 "\n",
                 "runcmd:\n",
                 "  - echo \"unattended-upgrades       unattended-upgrades/enable_auto_updates boolean true\" | debconf-set-selections; dpkg-reconfigure -f noninteractive unattended-upgrades\n",
+                "  - sed -i s/.ubuntu.pool.ntp.org/.amazon.pool.ntp.org\\ iburst/g /etc/ntp.conf\n",
+                "  - echo \"tinker panic 0\" | cat - /etc/ntp.conf > /tmp/ntp.conf && mv /tmp/ntp.conf /etc/ntp.conf\n",
+                "  - ntpstat\n",
                 "\n",
                 "bootcmd:\n",
                 "  - apt-get update\n",
+                "  - ntpstat\n",
                 "\n",
                 "power_state:\n",
                 "  delay: \"+30\"\n",
